@@ -13,4 +13,4 @@ import CreateUser from "@/pages/CreateUser.vue"
  })
 
 
-export default router;
+export default router; 
