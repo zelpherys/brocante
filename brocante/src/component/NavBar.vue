@@ -2,12 +2,13 @@
 <template>   
  <nav class="navbar">
     <div class="navbar-container">
-        <a href="#" class="brand-logo">Ma Boutique</a>
+        <a href="#" class="brand-logo">La Brocante</a>
         <ul class="nav-links">
             <li><a href="#home">Accueil</a></li>
             <li><a href="#categories">Catégories</a></li>
             <li><a href="#about">À propos</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Contact</a></li> 
+            <li></li>
         </ul>
 
     </div>
@@ -47,7 +48,7 @@
 }
 
 .nav-links li {
-    margin-left: 20px;
+    margin-left: 24px;
 }
 
 .nav-links a {
@@ -68,49 +69,5 @@
     border: none;
     cursor: pointer;
     outline: none;
-}
-
-
-
-/* Styles pour petits écrans */
-@media (max-width: 768px) {
-    .nav-links {
-        position: absolute;
-        top: 60px;
-        left: -100%;
-        width: 100%;
-        height: 100vh;
-        background-color: #333;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: left 0.3s;
-    }
-
-    .nav-links li {
-        margin-left: 0;
-        margin-bottom: 20px;
-    }
-
-    .nav-toggle {
-        display: block;
-    }
-
-    .nav-toggle.active .hamburger {
-        transform: rotate(45deg);
-    }
-
-    .nav-toggle.active .hamburger::before {
-        top: 0;
-        transform: rotate(90deg);
-    }
-
-    .nav-toggle.active .hamburger::after {
-        bottom: 0;
-        transform: rotate(90deg);
-    }
-
-
 }
 </style>
