@@ -7,8 +7,6 @@
             <li><a href="#home">Accueil</a></li>
             <li><a href="#categories">Catégories</a></li>
             <li><a href="#about">À propos</a></li>
-            <li><a href="#contact">Contact</a></li> 
-            <li></li>
         </ul>
 
     </div>
@@ -32,6 +30,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-right: 50px;
 }
 
 .brand-logo {
@@ -62,12 +61,5 @@
     color: #007bff;
 }
 
-/* Styles pour le bouton de menu (petits écrans) */
-.nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
+
 </style>

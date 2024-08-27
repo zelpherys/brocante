@@ -11,4 +11,4 @@ import Homepage from "@/pages/HomePage.vue";
  })
 
 
-export default router;
+export default router; 
