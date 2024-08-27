@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "test",
+      "email": "test",
+      "password": "test"
+    },
+    {
+      "id": 2,
+      "username": "test2",
+      "email": "test2@testmail.fr",
+      "password": "test"
+    },
+    {
+      "id": 3,
+      "username": "test2",
+      "email": "test2@testmail.fr",
+      "password": "test"
+    },
+    {
+      "id": 4,
+      "username": "test3",
+      "email": "teqt3@testmail.fr",
+      "password": "test3"
+    }
+  ]
+}
