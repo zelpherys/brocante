@@ -25,7 +25,7 @@
       "password": "test3"
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "test55",
       "email": "test",
       "password": "test"
@@ -33,7 +33,7 @@
   ],
   "articles": [
     {
-      "id": 1,
+      "id": "1",
       "title": "vente de violon",
       "description": "blablablabla",
       "price": 750,
@@ -41,7 +41,7 @@
       "userId": "1"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "guitaar",
       "description": "blablabla",
       "price": 1500,
@@ -49,7 +49,7 @@
       "userId": "1"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "tambour",
       "description": "zaeaeaeaze",
       "price": 500,
@@ -57,11 +57,51 @@
       "userId": "1"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "piano",
       "description": "dfdsfhdslfkdlkfjsdf",
       "price": 250000,
       "imageUrl": "https://www.musique-galland.fr/medias/images/c3xa.jpg",
+      "userId": "1"
+    },
+    {
+      "id": 5,
+      "title": "test",
+      "description": "test",
+      "price": 55,
+      "imageUrl": "https://emisb.sisteronais-buech.fr/enseignements/les-instruments/les-instruments-a-vent-les-cuivre/",
+      "userId": "1"
+    },
+    {
+      "id": 6,
+      "title": "test",
+      "description": "test",
+      "price": 555,
+      "imageUrl": "https://www.jeuxetcompagnie.fr/wp-content/uploads/2014/01/coloriage-instrument-de-musique.jpg",
+      "userId": "1"
+    },
+    {
+      "id": 7,
+      "title": "test",
+      "description": "test",
+      "price": 555,
+      "imageUrl": "https://www.jeuxetcompagnie.fr/wp-content/uploads/2014/01/coloriage-instrument-de-musique.jpg",
+      "userId": "1"
+    },
+    {
+      "id": 8,
+      "title": "test",
+      "description": "test",
+      "price": 555,
+      "imageUrl": "https://www.jeuxetcompagnie.fr/wp-content/uploads/2014/01/coloriage-instrument-de-musique.jpg",
+      "userId": "1"
+    },
+    {
+      "id": 9,
+      "title": "test",
+      "description": "test",
+      "price": 555,
+      "imageUrl": "https://www.jeuxetcompagnie.fr/wp-content/uploads/2014/01/coloriage-instrument-de-musique.jpg",
       "userId": "1"
     }
   ]
