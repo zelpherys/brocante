@@ -13,14 +13,12 @@ export function useLogin() {
     loading.value = true;
     error.value = null;
     try {
-      const response = await axios.get('http://localhost:3000/users', {
-        params: {
-          username: username.value,
-          password: password.value
-        }
+      const response = await axios.post('https://reqres.in/api/login', {
+        email: username.value,
+        password: password.value
       });
-      const user = response.data.find(user => user.username === username.value && user.password === password.value);
-      if (user) {
+      const user = response.data;
+      if (user.token) {
         authStore.login(user);
         return user;
       } else {

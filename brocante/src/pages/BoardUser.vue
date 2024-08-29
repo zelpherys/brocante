@@ -1,29 +1,30 @@
 <template>
+  <!-- Conteneur principal pour le tableau de bord -->
   <br>
   <div class="dashboard-container">
-    <!-- Titre de la page de tableau de bord -->
+    <!-- Titre de la page du tableau de bord -->
     <h2>Tableau de bord</h2>
-    <!-- Message de bienvenue avec le nom de l'utilisateur -->
-    <p>Bienvenue, {{ user.username }}!</p>
-    <!-- Formulaire pour créer un article -->
+    <!-- Message de bienvenue personnalisé avec le nom de l'utilisateur -->
+    <p>Bienvenue, {{ user?.username }}!</p>
+    <!-- Formulaire pour créer un nouvel article -->
     <form class="create-article-form" @submit.prevent="createNewArticle">
+      <!-- Champ pour le titre de l'article -->
       <div class="form-group">
-        <!-- Champ pour le titre de l'article -->
         <label for="title">Titre:</label>
         <input type="text" v-model="title" required />
       </div>
+      <!-- Champ pour la description de l'article -->
       <div class="form-group">
-        <!-- Champ pour la description de l'article -->
         <label for="description">Description:</label>
         <textarea v-model="description" required></textarea>
       </div>
+      <!-- Champ pour le prix de l'article -->
       <div class="form-group">
-        <!-- Champ pour le prix de l'article -->
         <label for="price">Prix:</label>
         <input type="number" v-model="price" required />
       </div>
+      <!-- Champ pour l'URL de l'image de l'article -->
       <div class="form-group">
-        <!-- Champ pour l'URL de l'image de l'article -->
         <label for="imageUrl">URL de l'image:</label>
         <input type="text" v-model="imageUrl" required />
       </div>
@@ -38,6 +39,7 @@
     <!-- Liste des articles de l'utilisateur -->
     <h3>Vos articles</h3>
     <ul class="articles-list">
+      <!-- Utilisation de v-for pour parcourir et afficher chaque article de l'utilisateur -->
       <li v-for="article in userArticles" :key="article.id" class="article-card">
         <h4>{{ article.title }}</h4>
         <p>{{ article.description }}</p>
@@ -51,19 +53,22 @@
 <script setup>
 import { ref, onMounted } from 'vue'; // Importation de ref et onMounted pour la réactivité et les hooks de cycle de vie
 import { useRouter } from 'vue-router'; // Importation du composable useRouter pour la navigation
-import { useCreateArticle } from '@/composables/useCreateArticle'; // Importation du composable useCreateArticle
-import { useReadArticles } from '@/composables/useReadArticles'; // Importation du composable useReadArticles
+import { useCreateArticle } from '@/composables/useCreateArticle'; // Importation du composable personnalisé useCreateArticle
+import { useReadArticles } from '@/composables/useReadArticles'; // Importation du composable personnalisé useReadArticles
+import { useAuthStore } from '@/stores/authStore'; // Importation du store d'authentification
+
+// Utilisation du store d'authentification pour accéder à l'utilisateur connecté
+const authStore = useAuthStore();
+const router = useRouter(); // Initialisation du routeur pour la navigation entre les pages
 
 // Référence réactive pour stocker les informations de l'utilisateur connecté
-const user = ref(JSON.parse(localStorage.getItem('user')));
+const user = ref(authStore.user);
 
 // Utilisation du composable useCreateArticle pour obtenir les variables et fonctions nécessaires à la création d'articles
-const { title, description, price, imageUrl, error, createArticle } = useCreateArticle(); // Suppression de la variable loading
+const { title, description, price, imageUrl, error, createArticle } = useCreateArticle();
 
 // Utilisation du composable useReadArticles pour obtenir les variables et fonctions nécessaires à la lecture des articles
 const { userArticles, fetchUserArticles } = useReadArticles();
-
-const router = useRouter(); // Utilisation du composable useRouter pour la navigation
 
 // Fonction pour gérer la création d'un nouvel article
 const createNewArticle = async () => {
@@ -73,108 +78,125 @@ const createNewArticle = async () => {
 
 // Fonction pour gérer la déconnexion de l'utilisateur
 const logout = () => {
-  localStorage.removeItem('user'); // Suppression des informations de l'utilisateur du localStorage
-  router.push('/connexion'); // Redirection vers la page de connexion
+  authStore.logout(); // Appel de la fonction logout du store pour déconnecter l'utilisateur
+  router.push('/connexion'); // Redirection vers la page de connexion après la déconnexion
 };
 
 // Hook de cycle de vie onMounted pour récupérer les articles de l'utilisateur lorsque le composant est monté
 onMounted(() => {
-  fetchUserArticles(user.value.id); // Appel de la fonction fetchUserArticles pour récupérer les articles de l'utilisateur
+  if (user.value) { // Vérification si un utilisateur est connecté
+    fetchUserArticles(user.value.id); // Récupération des articles de l'utilisateur connecté
+  } else {
+    router.push('/connexion'); // Redirection vers la page de connexion si aucun utilisateur n'est connecté
+  }
 });
 </script>
 
 <style scoped>
+/* Style du conteneur principal du tableau de bord */
 .dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   background-color: #f5f5f5;
-  min-height: 100vh;
+  min-height: 100vh; /* Assure que le conteneur prend toute la hauteur de la fenêtre */
 }
 
+/* Style du bouton de déconnexion */
 .logout-button {
   margin-top: 10px; /* Espacement entre le formulaire et le bouton de déconnexion */
-  padding: 5px px; /* Réduction de la taille du bouton */
-  background-color: #ff4d4d;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 5px; /* Réduction de la taille du bouton */
+  background-color: #ff4d4d; /* Couleur de fond du bouton */
+  color: #fff; /* Couleur du texte du bouton */
+  border: none; /* Suppression des bordures du bouton */
+  border-radius: 4px; /* Coins arrondis pour le bouton */
+  cursor: pointer; /* Change le curseur à une main lorsqu'on survole le bouton */
 }
 
+/* Effet de survol pour le bouton de déconnexion */
 .logout-button:hover {
-  background-color: #ff1a1a;
+  background-color: #ff1a1a; /* Couleur de fond plus sombre au survol */
 }
 
+/* Style du titre principal */
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Espacement sous le titre */
 }
 
+/* Style du formulaire de création d'article */
 .create-article-form {
-  width: 50%; /* Réduction de la largeur */
-  padding: 15px; /* Réduction du padding */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px; /* Réduction de l'espacement */
+  width: 50%; /* Largeur du formulaire */
+  padding: 15px; /* Espacement interne du formulaire */
+  border: 1px solid #ccc; /* Bordure grise autour du formulaire */
+  border-radius: 8px; /* Coins arrondis pour le formulaire */
+  background-color: #fff; /* Couleur de fond blanche pour le formulaire */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère sous le formulaire */
+  margin-bottom: 10px; /* Espacement sous le formulaire */
 }
 
+/* Style de chaque groupe de champ dans le formulaire */
 .form-group {
-  margin-bottom: 10px; /* Réduction de l'espacement */
+  margin-bottom: 10px; /* Espacement sous chaque groupe de champ */
 }
 
+/* Style pour les labels des champs */
 label {
-  display: block;
-  margin-bottom: 5px;
+  display: block; /* Affichage en bloc pour que le label prenne toute la largeur disponible */
+  margin-bottom: 5px; /* Espacement sous le label */
 }
 
+/* Style pour les champs de saisie et les zones de texte */
 input, textarea {
-  width: 100%;
-  padding: 8px; /* Réduction du padding */
-  box-sizing: border-box;
+  width: 100%; /* Champs prennent toute la largeur du conteneur parent */
+  padding: 8px; /* Espacement interne des champs */
+  box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur totale des champs */
 }
 
+/* Style général des boutons */
 button {
-  width: 15%;
-  padding: 10px; /* Réduction du padding */
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 15%; /* Largeur des boutons */
+  padding: 10px; /* Espacement interne des boutons */
+  background-color: #007bff; /* Couleur de fond des boutons */
+  color: #fff; /* Couleur du texte des boutons */
+  border: none; /* Suppression des bordures des boutons */
+  border-radius: 4px; /* Coins arrondis pour les boutons */
+  cursor: pointer; /* Change le curseur à une main lorsqu'on survole le bouton */
 }
 
+/* Effet de survol pour les boutons */
 button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Couleur de fond plus sombre au survol */
 }
 
+/* Style pour la liste des articles */
 .articles-list {
-  width: 80%;
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  width: 80%; /* Largeur de la liste */
+  list-style: none; /* Suppression des puces de liste */
+  padding: 0; /* Suppression du padding par défaut */
+  display: flex; /* Affichage en Flexbox pour aligner les articles horizontalement */
+  flex-wrap: wrap; /* Permet d'aller à la ligne lorsque la liste d'articles dépasse la largeur disponible */
+  gap: 20px; /* Espacement entre les articles */
+  justify-content: center; /* Centrer les articles horizontalement */
 }
 
+/* Style pour chaque carte d'article */
 .article-card {
-  width: 200px; /* Taille fixe pour les cartes */
-  padding: 10px; /* Réduction du padding */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  width: 200px; /* Largeur fixe pour les cartes */
+  padding: 10px; /* Espacement interne des cartes */
+  border: 1px solid #ccc; /* Bordure grise autour des cartes */
+  border-radius: 8px; /* Coins arrondis pour les cartes */
+  background-color: #fff; /* Couleur de fond blanche pour les cartes */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère sous les cartes */
+  text-align: center; /* Centre le texte à l'intérieur des cartes */
 }
 
+/* Style pour les images d'articles */
 .article-card img {
-  width: 100%; /* Taille fixe pour les images */
-  height: 150px; /* Taille fixe pour les images */
-  object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  width: 100%; /* L'image prend toute la largeur de la carte */
+  height: 150px; /* Hauteur fixe pour les images */
+  object-fit: cover; /* Couvre l'image tout en conservant ses proportions */
+  border-radius: 4px; /* Coins arrondis pour les images */
+  margin-bottom: 10px; /* Espacement sous l'image */
 }
 </style>

@@ -31,7 +31,7 @@
       "password": "test"
     },
     {
-      "id": 6,
+      "id": "6",
       "username": "lord",
       "email": "lord",
       "password": "lord"
@@ -71,7 +71,7 @@
       "userId": "1"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "test",
       "description": "test",
       "price": 55,
@@ -79,7 +79,7 @@
       "userId": "1"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "test",
       "description": "test",
       "price": 555,
@@ -87,7 +87,7 @@
       "userId": "1"
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "test",
       "description": "test",
       "price": 555,
@@ -95,7 +95,7 @@
       "userId": "1"
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "test",
       "description": "test",
       "price": 555,
@@ -103,12 +103,28 @@
       "userId": "1"
     },
     {
-      "id": 9,
+      "id": "9",
       "title": "test",
       "description": "test",
       "price": 555,
       "imageUrl": "https://www.jeuxetcompagnie.fr/wp-content/uploads/2014/01/coloriage-instrument-de-musique.jpg",
       "userId": "1"
+    },
+    {
+      "id": 10,
+      "title": "piano",
+      "description": "un piano super cher",
+      "price": 54300,
+      "imageUrl": "https://fast-images.static-thomann.de/pics/bdb/_54/549646/17666053_800.jpg",
+      "userId": "6"
+    },
+    {
+      "id": 11,
+      "title": "violon",
+      "description": "un violon très cher",
+      "price": 30000,
+      "imageUrl": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQyx_MfvS4Lo3IUA9z0Z4fvrScRVYs0KnFjThuJYFGOfm57gAhDZgYjJest3tNqzlrhVnB8mw6WMagTTYl3y-I7R1IUW6lC9NcBz4_C44UvM2OHMvEKumF80VlwAFBbhNftcxWxorloMmw&usqp=CAc",
+      "userId": "6"
     }
   ]
 }
