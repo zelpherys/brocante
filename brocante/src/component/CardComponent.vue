@@ -1,19 +1,27 @@
 <script setup>
 import { defineProps } from "vue";
-defineProps({
-  produit: {
+import { useRouter } from "vue-router";
+
+const props = defineProps({
+  article: {
     type: Object,
     required: true,
   },
 });
+
+const router = useRouter();
+
+const navigateToDetails = () => {
+  router.push({ name: "ArticleDetail", params: { id: props.article.id } });
+};
 </script>
 
 <template>
-  <div class="product-item">
-    <img v-bind:src="produit.imageUrl" :alt="produit.description" />
-    <p>{{ produit.price }} €</p>
-    <p>{{ produit.title }}</p>
-    <p>{{ produit.description }}</p>
+  <div class="product-item" @click="navigateToDetails" style="cursor: pointer">
+    <img v-bind:src="article.imageUrl" :alt="article.description" />
+    <p>{{ article.price }} €</p>
+    <p>{{ article.title }}</p>
+    <p>{{ article.description }}</p>
   </div>
 </template>
 
