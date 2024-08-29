@@ -1,16 +1,18 @@
 <script setup></script>
+
 <template>
   <nav class="navbar">
     <div class="navbar-container">
       <a href="#" class="brand-logo">La Brocante</a>
       <ul class="nav-links">
-        <li><router-link to="./">Accueil</router-link></li>
-        <li><router-link to="./create">Create user</router-link></li>
-        <li><router-link to="./connexion">Connexion</router-link></li>
+        <li><router-link to="/">Accueil</router-link></li>
+        <li><router-link to="/create">Create user</router-link></li>
+        <li><router-link to="/connexion">Connexion</router-link></li>
       </ul>
     </div>
   </nav>
 </template>
+
 <style scoped>
 /* Styles pour la Navbar */
 .navbar {

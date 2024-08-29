@@ -1,5 +1,5 @@
 <script setup>
-import CardComponent from "@/component/CardComponent.vue";
+import CardComponent from "@/components/CardComponent.vue";
 import { useArticles } from "@/composables/useArticles"; // Assurez-vous que le chemin est correct
 
 const { articles } = useArticles();

@@ -5,17 +5,33 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const article = ref(null);
+const user = ref(null);
 
-onMounted(async () => {
-  const response = await fetch(
+const fetchArticleAndUser = async () => {
+  // Récupération de l'article
+  const articleResponse = await fetch(
     `http://localhost:3000/articles/${route.params.id}`
   );
-  if (response.ok) {
-    article.value = await response.json();
+  if (articleResponse.ok) {
+    article.value = await articleResponse.json();
+
+    // Récupération de l'utilisateur associé à l'article
+    const userResponse = await fetch(
+      `http://localhost:3000/users/${article.value.userId}`
+    );
+    if (userResponse.ok) {
+      user.value = await userResponse.json();
+    } else {
+      console.error("Utilisateur non trouvé");
+    }
   } else {
-    // Gestion de l'erreur si l'article n'est pas trouvé
-    router.push("/"); // Retourne à la page d'accueil si l'article n'est pas trouvé
+    // Si l'article n'est pas trouvé, retour à l'accueil
+    router.push("/");
   }
+};
+
+onMounted(() => {
+  fetchArticleAndUser();
 });
 
 const goBack = () => {
@@ -33,6 +49,11 @@ const goBack = () => {
     />
     <p class="article-price">Prix: {{ article.price }} €</p>
     <p class="article-description">{{ article.description }}</p>
+
+    <div v-if="user" class="article-user">
+      <h3>Posté par : {{ user.username }}</h3>
+      <p>Email : {{ user.email }}</p>
+    </div>
 
     <div class="buttons">
       <button @click="goBack">Revenir à la page d'accueil</button>
@@ -69,6 +90,13 @@ const goBack = () => {
   font-size: 16px;
   color: #555;
   margin-bottom: 30px;
+}
+
+.article-user {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .buttons {
