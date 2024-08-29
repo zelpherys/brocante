@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
@@ -7,12 +7,28 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isClickable: {
+    type: Boolean,
+    default: true,
+  },
+  showEditButton: {
+    type: Boolean,
+    default: true,
+  },
 });
+
+const emits = defineEmits(["editArticle"]);
 
 const router = useRouter();
 
+const triggerEdit = () => {
+  emits("editArticle", props.article);
+};
+
 const navigateToDetails = () => {
-  router.push({ name: "ArticleDetail", params: { id: props.article.id } });
+  if (props.isClickable) {
+    router.push({ name: "ArticleDetail", params: { id: props.article.id } });
+  }
 };
 </script>
 
@@ -22,6 +38,9 @@ const navigateToDetails = () => {
     <p class="article-price">{{ article.price }} €</p>
     <p class="article-title">{{ article.title }}</p>
     <p class="article-description">{{ article.description }}</p>
+    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
+      Modifier
+    </button>
   </div>
 </template>
 
@@ -32,7 +51,7 @@ const navigateToDetails = () => {
   justify-content: space-between;
   width: 100%;
   max-width: 200px;
-  height: 350px; /* Uniform height */
+  height: 350px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin: 10px;
@@ -40,16 +59,17 @@ const navigateToDetails = () => {
   text-align: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .product-item img {
   width: 100%;
-  height: 150px; /* Fixed height for images */
+  height: 150px;
   object-fit: cover;
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
@@ -70,6 +90,20 @@ const navigateToDetails = () => {
   color: #555;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* Truncate text */
+  white-space: nowrap;
+}
+
+.edit-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import CardComponent from "@/components/CardComponent.vue";
-import { useArticles } from "@/composables/useArticles"; // Assurez-vous que le chemin est correct
+import { useArticles } from "@/composables/useArticles";
 
 const { articles } = useArticles();
 </script>
@@ -25,6 +25,8 @@ const { articles } = useArticles();
           v-for="article in articles"
           :key="article.id"
           :article="article"
+          :isClickable="true"
+          :showEditButton="false"
         />
       </div>
     </main>
@@ -62,9 +64,19 @@ h1 {
   cursor: pointer;
 }
 
+/* Grid layout for the products */
 .products-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
   padding: 20px;
+}
+
+.products-grid > * {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 </style>
