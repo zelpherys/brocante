@@ -29,6 +29,12 @@
       "username": "test55",
       "email": "test",
       "password": "test"
+    },
+    {
+      "id": 6,
+      "username": "lord",
+      "email": "lord",
+      "password": "lord"
     }
   ],
   "articles": [
