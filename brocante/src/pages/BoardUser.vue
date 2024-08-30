@@ -46,16 +46,18 @@
     <h3>Vos articles</h3>
     <ul class="articles-list">
       <!-- Utilisation du composant CardComponent pour chaque article -->
-      <CardComponent
-        v-for="article in userArticles"
-        :key="article.id"
-        :article="article"
-        :isClickable="false"
-        @editArticle="editArticle"
-      />
+      <li v-for="article in userArticles" :key="article.id">
+        <CardComponent
+          :article="article"
+          :isClickable="false"
+          @editArticle="editArticle"
+          @deleteArticle="deleteArticleHandler"
+        />
+      </li>
     </ul>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from "vue";
@@ -63,16 +65,18 @@ import { useRouter } from "vue-router";
 import { useCreateArticle } from "@/composables/useCreateArticle";
 import { useReadArticles } from "@/composables/useReadArticles";
 import { useUpdateArticle } from "@/composables/useUpdateArticle";
+import { useDeleteArticle } from "@/composables/useDeleteArticle"; // Import the delete composable
 import CardComponent from "@/components/CardComponent.vue";
 
 // Référence réactive pour stocker les informations de l'utilisateur connecté
 const user = ref(JSON.parse(localStorage.getItem("user")));
 
-// Utilisation des composables pour créer, lire et mettre à jour les articles
+// Utilisation des composables pour créer, lire, mettre à jour et supprimer les articles
 const { title, description, price, imageUrl, error, createArticle } =
   useCreateArticle();
 const { userArticles, fetchUserArticles } = useReadArticles();
 const { updateArticle } = useUpdateArticle();
+const { deleteArticle } = useDeleteArticle();
 
 const router = useRouter();
 const isEditing = ref(false);
@@ -107,6 +111,12 @@ const updateExistingArticle = async () => {
   fetchUserArticles(user.value.id);
   isEditing.value = false;
   editingArticleId.value = null;
+};
+
+// Fonction pour supprimer un article
+const deleteArticleHandler = async (articleId) => {
+  await deleteArticle(articleId);
+  fetchUserArticles(user.value.id); // Refresh the articles list after deletion
 };
 
 // Fonction pour gérer la déconnexion de l'utilisateur

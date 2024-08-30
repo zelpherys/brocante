@@ -31,37 +31,13 @@
       "password": "test"
     },
     {
-      "id": 6,
+      "id": "6",
       "username": "lord",
       "email": "lord",
       "password": "lord"
     }
   ],
   "articles": [
-    {
-      "id": "1",
-      "title": "vente de violon",
-      "description": "blablablabla",
-      "price": 750,
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Old_violin.jpg/280px-Old_violin.jpg",
-      "userId": "1"
-    },
-    {
-      "id": "2",
-      "title": "guitaar",
-      "description": "blablabla",
-      "price": 1500,
-      "imageUrl": "https://www.midimusic.fr/1310-large_default/epiphone-guitare-electrique-sg-standard-cherry-gaucher.jpg",
-      "userId": "1"
-    },
-    {
-      "title": "tambour",
-      "description": "zaeaeaeaze",
-      "price": 500,
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/M0354_1951-15-077_1.jpg",
-      "userId": "1",
-      "id": "3"
-    },
     {
       "id": "4",
       "title": "piano",
@@ -77,14 +53,6 @@
       "imageUrl": "https://emisb.sisteronais-buech.fr/wp-content/uploads/sites/2/2019/08/Copie-de-contenus-types11.png",
       "userId": "1",
       "id": "5"
-    },
-    {
-      "title": "elektron DIGITAKT II",
-      "description": "test",
-      "price": 25,
-      "imageUrl": "https://www.woodbrass.com/images/SQUARE400/woodbrass/1ELEKTRON+DIGITAKT2.JPG",
-      "userId": "1",
-      "id": "6"
     },
     {
       "title": "1",
@@ -103,14 +71,6 @@
       "id": "8"
     },
     {
-      "title": "test",
-      "description": "sdqd",
-      "price": 25,
-      "imageUrl": "dqsd",
-      "userId": "1",
-      "id": "9"
-    },
-    {
       "title": "mapex ARMORY ROCK STUDIOEASE PIANO BLACK",
       "description": "elektron DIGITAKT II",
       "price": 995,
@@ -127,44 +87,20 @@
       "userId": "4"
     },
     {
-      "title": "hfhjgfhjg",
-      "description": " ngcfngng",
-      "price": 525,
-      "imageUrl": "https://www.woodbrass.com/images/woodbrass/MNU-ZEUS-JUNIOR.JPG",
-      "userId": "4",
-      "id": "12"
-    },
-    {
-      "title": "tambour",
-      "description": "kgjkjhkjh",
-      "price": 33333,
-      "imageUrl": "https://www.percufrance.com/843-large_default/product.jpg",
-      "userId": "4",
-      "id": "13"
-    },
-    {
-      "id": 14,
-      "title": " novation LAUNCHPAD PRO MK3",
-      "description": "blablablabla",
-      "price": 999,
-      "imageUrl": "https://www.woodbrass.com/images/woodbrass/7NOVATION+LAUNCHPAD+PRO+MK3.JPG",
-      "userId": "2"
-    },
-    {
-      "id": 15,
-      "title": "hfhjgfhjg",
-      "description": " ngcfngng",
-      "price": 525,
-      "imageUrl": "https://www.woodbrass.com/images/woodbrass/MNU-ZEUS-JUNIOR.JPG",
-      "userId": "4"
-    },
-    {
-      "id": 16,
+      "id": "16",
       "title": " woodbrass GB820 20W",
       "description": "rtgrtgr",
       "price": 525,
       "imageUrl": "https://www.woodbrass.com/images/woodbrass/MWB-GB820.JPG",
       "userId": "4"
+    },
+    {
+      "id": "14",
+      "title": "violon ",
+      "description": "test",
+      "price": 89532,
+      "imageUrl": "data:image/jpeg;base64,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",
+      "userId": "1"
     }
   ]
 }

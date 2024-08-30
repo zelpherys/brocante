@@ -15,14 +15,23 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  showDeleteButton: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-const emits = defineEmits(["editArticle"]);
+const emits = defineEmits(["editArticle", "deleteArticle"]);
 
 const router = useRouter();
 
 const triggerEdit = () => {
   emits("editArticle", props.article);
+};
+
+const deleteArticle = (event) => {
+  event.stopPropagation(); // Prevents triggering the card click event
+  emits("deleteArticle", props.article.id);
 };
 
 const navigateToDetails = () => {
@@ -40,6 +49,9 @@ const navigateToDetails = () => {
     <p class="article-description">{{ article.description }}</p>
     <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
       Modifier
+    </button>
+    <button v-if="showDeleteButton" @click="deleteArticle" class="delete-button">
+      Supprimer
     </button>
   </div>
 </template>
