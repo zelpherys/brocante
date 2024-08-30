@@ -1,6 +1,10 @@
 <script setup>
-import CardComponent from "@/component/CardComponent.vue";
+import CardComponent from "@/components/CardComponent.vue";
+import { useArticles } from "@/composables/useArticles";
+
+const { articles } = useArticles();
 </script>
+
 <template>
   <h1>Hello Brocante</h1>
   <div>
@@ -11,20 +15,19 @@ import CardComponent from "@/component/CardComponent.vue";
         <button>Cuivres</button>
         <button>Batteries</button>
         <button>Prix</button>
-
-        <!-- Ajoutez les autres catégories ici -->
       </div>
     </header>
 
     <main>
       <div class="products-grid">
-        <!-- Exemple de produit -->
+        <!-- Affichage des articles -->
         <CardComponent
           v-for="article in articles"
-          v-bind:key="article.id"
-          v-bind:article="article"
+          :key="article.id"
+          :article="article"
+          :isClickable="true"
+          :showEditButton="false"
         />
-        <!-- Répétez pour les autres produits -->
       </div>
     </main>
   </div>
@@ -60,9 +63,20 @@ h1 {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* Grid layout for the products */
 .products-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
   padding: 20px;
+}
+
+.products-grid > * {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 </style>
