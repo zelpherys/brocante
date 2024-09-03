@@ -35,7 +35,7 @@ onUnmounted(() => {
       <!-- Liste des liens de navigation -->
       <ul class="nav-links">
         <!-- Lien vers la page d'accueil -->
-        <li><router-link to="./">Accueil</router-link></li>
+        <li><router-link to="/">Accueil</router-link></li>
         <!-- Lien vers la page de création d'un utilisateur -->
         <!-- Afficher le lien d'inscription seulement si l'utilisateur n'est pas connecté -->
         <li v-if="!isLoggedIn">
