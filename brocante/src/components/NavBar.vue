@@ -26,7 +26,6 @@ onUnmounted(() => {
   window.removeEventListener("storage", handleStorageChange); // Supprimer l'écouteur d'événement pour éviter les fuites de mémoire lorsque le composant est démonté
 });
 </script>
-
 <template>
   <!-- Début du bloc de template de la barre de navigation -->
   <nav class="navbar">
@@ -35,9 +34,20 @@ onUnmounted(() => {
       <a href="#" class="brand-logo">La Brocante</a>
       <!-- Liste des liens de navigation -->
       <ul class="nav-links">
+        <!-- Lien vers la page d'accueil -->
         <li><router-link to="./">Accueil</router-link></li>
-        <li><router-link to="./create">Create user</router-link></li>
-        <li><router-link to="./connexion">Connexion</router-link></li>
+        <!-- Lien vers la page de création d'un utilisateur -->
+        <!-- Afficher le lien d'inscription seulement si l'utilisateur n'est pas connecté -->
+        <li v-if="!isLoggedIn">
+          <router-link to="./create">Inscription</router-link>
+        </li>
+        <!-- Affichage conditionnel des liens de navigation selon l'état de connexion de l'utilisateur -->
+        <!-- Si l'utilisateur n'est pas connecté, afficher le lien de connexion -->
+        <li v-if="!isLoggedIn">
+          <router-link to="./connexion">Connexion</router-link>
+        </li>
+        <!-- Si l'utilisateur est connecté, afficher le lien vers le tableau de bord -->
+        <li v-else><router-link to="./board">Dashboard</router-link></li>
       </ul>
     </div>
   </nav>

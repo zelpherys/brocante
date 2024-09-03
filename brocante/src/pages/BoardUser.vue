@@ -112,7 +112,7 @@ const updateExistingArticle = async () => {
 // Fonction pour gérer la déconnexion de l'utilisateur
 const logout = () => {
   localStorage.removeItem("user");
-  router.push("/connexion");
+  router.push("./connexion");
 };
 
 // Hook de cycle de vie onMounted pour récupérer les articles de l'utilisateur lorsque le composant est monté
