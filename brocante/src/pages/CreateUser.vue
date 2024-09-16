@@ -4,7 +4,7 @@
     <h1>Créer un compte</h1>
     <form @submit.prevent="handleSubmit" class="register-form">
       <div class="form-group">
-        <input v-model="username" placeholder="Pseudo" required />
+        <input v-model="username" placeholder="Nom" required />
       </div>
       <div class="form-group">
         <input v-model="email" placeholder="Email" required />
@@ -31,6 +31,7 @@ export default {
 
     const handleSubmit = async () => {
       const userData = { username: username.value, email: email.value, password: password.value };
+      console.log('Données envoyées:', userData); // Afficher les données envoyées
       await createUser(userData);
     };
 
@@ -51,8 +52,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centrage vertical */
-  height: 100vh; /* Prend toute la hauteur de la page */
+  justify-content: center;
+  height: 100vh;
   background-color: #f5f5f5;
 }
 
@@ -61,8 +62,8 @@ h1 {
 }
 
 .register-form {
-  width: 25%; /* Réduction de la largeur */
-  padding: 15px; /* Réduction du padding */
+  width: 25%;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fff;
@@ -70,18 +71,18 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 10px; /* Réduction de l'espacement */
+  margin-bottom: 10px;
 }
 
 input {
   width: 100%;
-  padding: 8px; /* Réduction du padding */
+  padding: 8px;
   box-sizing: border-box;
 }
 
 button {
   width: 100%;
-  padding: 10px; /* Réduction du padding */
+  padding: 10px;
   background-color: #007bff;
   color: #fff;
   border: none;

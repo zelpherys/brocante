@@ -1,33 +1,24 @@
-import { ref } from 'vue'; // Importation de ref pour créer des références réactives
-import axios from 'axios'; // Importation d'axios pour les requêtes HTTP
+import { ref } from 'vue';
+import axios from 'axios';
 
 export function useCreateUser() {
-  const loading = ref(false); // Référence réactive pour l'état de chargement
-  const error = ref(null); // Référence réactive pour les erreurs
+  const loading = ref(false);
+  const error = ref(null);
 
-  // Fonction pour créer un nouvel utilisateur
   const createUser = async (userData) => {
-    loading.value = true; // Définir l'état de chargement à true
-    error.value = null; // Réinitialiser l'erreur
+    loading.value = true;
+    error.value = null;
     try {
-      // Requête pour obtenir le nombre actuel d'utilisateurs depuis l'API
-      const usersResponse = await axios.get('http://localhost:3000/users');
-      const userCount = usersResponse.data.length; // Stocker le nombre d'utilisateurs
-
-      // Ajouter un ID incrémentiel à l'utilisateur
-      userData.id = userCount + 1;
-
-      // Requête pour créer un nouvel utilisateur avec les données fournies
+      console.log('Données envoyées:', userData); // Afficher les données envoyées
       const response = await axios.post('http://localhost:3000/users', userData);
-      return response.data; // Retourner les données de l'utilisateur créé
+      return response.data;
     } catch (err) {
-      error.value = err; // Définir l'erreur en cas d'échec de la requête
+      error.value = err;
     } finally {
-      loading.value = false; // Définir l'état de chargement à false
+      loading.value = false;
     }
   };
 
-  // Retour des variables et fonctions pour les rendre disponibles dans le composant
   return {
     createUser,
     loading,
