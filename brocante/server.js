@@ -24,7 +24,7 @@ app.post('/users', (req, res) => {
       }
     });
   });
-  
+   
 
 // Rediriger toutes les requêtes vers index.html
 app.get('*', (req, res) => {
