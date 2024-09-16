@@ -1,44 +1,43 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <!-- Titre de la page de connexion -->
       <h2>Connexion</h2>
-      <!-- Formulaire de connexion -->
       <form @submit.prevent="loginUser">
         <div class="form-group">
-          <!-- Champ pour le pseudo de l'utilisateur -->
-          <label for="username">Pseudo:</label>
+          <label for="username">Nom d'utilisateur :</label>  <!-- Modifié -->
           <input type="text" v-model="username" required />
         </div>
         <div class="form-group">
-          <!-- Champ pour le mot de passe de l'utilisateur -->
           <label for="password">Mot de passe:</label>
           <input type="password" v-model="password" required />
         </div>
-        <!-- Bouton pour soumettre le formulaire de connexion -->
-        <button type="submit">Se connecter</button>
+        <button type="submit" :disabled="loading">Se connecter</button>
       </form>
-      <!-- Affichage d'un message d'erreur si une erreur survient -->
+
+      <!-- Affichage des erreurs si la connexion échoue -->
       <p v-if="error">{{ error }}</p>
-      <!-- Affichage de l'état de chargement -->
+
+      <!-- Affichage d'un message de chargement pendant la requête -->
       <p v-if="loading">Connexion en cours...</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useLogin } from '@/composables/useLogin'; // Importation du composable useLogin
-import { useRouter } from 'vue-router'; // Importation du composable useRouter pour la navigation
+import { useLogin } from '@/composables/useLogin';  // Importation du composable useLogin
+import { useRouter } from 'vue-router';  // Utilisation du router pour la redirection après connexion
 
-// Utilisation du composable useLogin pour obtenir les variables et fonctions nécessaires
+// Utilisation du composable useLogin pour gérer la logique de connexion
 const { username, password, error, loading, login } = useLogin();
-const router = useRouter(); // Utilisation du composable useRouter pour la navigation
+const router = useRouter();  // Pour naviguer vers une autre page après connexion
 
-// Fonction pour gérer la soumission du formulaire de connexion
+// Fonction pour soumettre le formulaire de connexion
 const loginUser = async () => {
-  const user = await login(); // Appel de la fonction login pour authentifier l'utilisateur
+  const user = await login();  // Appel de la fonction login pour tenter la connexion
+
   if (user) {
-    router.push('/board'); // Redirection vers la page de tableau de bord si la connexion est réussie
+    // Si la connexion réussit, redirection vers la page du tableau de bord
+    router.push('/board');  // Remplace '/board' par la route de ton tableau de bord
   }
 };
 </script>
