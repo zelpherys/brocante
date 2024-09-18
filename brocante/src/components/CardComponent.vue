@@ -34,10 +34,10 @@ const navigateToDetails = () => {
 
 <template>
   <div class="product-item" @click="navigateToDetails">
-    <img :src="article.imageUrl" :alt="article.description" />
-    <p class="article-price">{{ article.price }} €</p>
+    <img :src="article.url" :alt="article.descriptif" />
+    <p class="article-price">{{ article.prix }} €</p>
     <p class="article-title">{{ article.title }}</p>
-    <p class="article-description">{{ article.description }}</p>
+    <p class="article-description">{{ article.descriptif }}</p>
     <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
       Modifier
     </button>
