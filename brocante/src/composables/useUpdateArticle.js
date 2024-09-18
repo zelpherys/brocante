@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import axios from "axios";
+import { ref } from 'vue';
+import axios from 'axios';
 
 export function useUpdateArticle() {
   const error = ref(null);
@@ -8,15 +8,12 @@ export function useUpdateArticle() {
   const updateArticle = async (articleId, updatedArticle) => {
     loading.value = true;
     error.value = null;
+
     try {
-      // Requête PUT pour mettre à jour l'article avec les nouvelles données
-      await axios.put(
-        `http://localhost:3000/articles/${articleId}`,
-        updatedArticle
-      );
-      alert("Article mis à jour avec succès !");
+      await axios.put(`http://localhost:3000/articles/${articleId}`, updatedArticle);
+      alert('Article mis à jour avec succès!');
     } catch (err) {
-      error.value = "Erreur lors de la mise à jour de l'article.";
+      error.value = 'Erreur lors de la mise à jour de l\'article.';
     } finally {
       loading.value = false;
     }
@@ -25,6 +22,6 @@ export function useUpdateArticle() {
   return {
     error,
     loading,
-    updateArticle,
+    updateArticle
   };
 }

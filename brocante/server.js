@@ -12,10 +12,9 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Route pour créer un nouvel utilisateur
 app.post('/users', (req, res) => {
-  const { username, email, password } = req.body; // Utiliser les bons champs
-  console.log('Données reçues pour la création d\'utilisateur:', req.body); // Afficher les données reçues
+  const { username, email, password } = req.body;
+  console.log('Données reçues pour la création d\'utilisateur:', req.body);
 
-  // Requête pour insérer un nouvel utilisateur dans la base de données
   const query = 'INSERT INTO user (nom, email, mdp) VALUES (?, ?, ?)';
   connection.query(query, [username, email, password], (err, results) => {
     if (err) {
@@ -29,9 +28,8 @@ app.post('/users', (req, res) => {
 
 // Route pour la connexion de l'utilisateur
 app.post('/login', (req, res) => {
-  const { nom, password } = req.body; // Récupérer 'nom' et 'password'
+  const { nom, password } = req.body;
   
-  // Requête pour trouver un utilisateur correspondant au nom fourni
   const query = 'SELECT * FROM user WHERE nom = ?';
   connection.query(query, [nom], (err, results) => {
     if (err) {
@@ -40,7 +38,7 @@ app.post('/login', (req, res) => {
       return;
     }
     
-    console.log('Résultats de la requête de connexion:', results); // Log des résultats
+    console.log('Résultats de la requête de connexion:', results);
 
     if (results.length === 0) {
       return res.status(401).json({ message: 'Utilisateur non trouvé.' });
@@ -48,7 +46,6 @@ app.post('/login', (req, res) => {
 
     const user = results[0];
 
-    // Comparer les mots de passe
     if (user.mdp === password) {
       res.status(200).json({ user });
     } else {
@@ -61,12 +58,10 @@ app.post('/login', (req, res) => {
 app.post('/articles', (req, res) => {
   const { title, descriptif, prix, url, user_id } = req.body;
   
-  // Validation des champs requis
   if (!title || !descriptif || !prix || !user_id) {
     return res.status(400).json({ message: 'Tous les champs sont requis.' });
   }
 
-  // Requête pour insérer un nouvel article dans la base de données
   const query = 'INSERT INTO article (title, descriptif, prix, url, user_id) VALUES (?, ?, ?, ?, ?)';
   connection.query(query, [title, descriptif, prix, url, user_id], (err, results) => {
     if (err) {
@@ -78,11 +73,26 @@ app.post('/articles', (req, res) => {
   });
 });
 
-// Route pour obtenir tous les articles
-app.get('/articles', (req, res) => {
-  // Requête pour obtenir tous les articles de la base de données
+// Route pour obtenir tous les articles de tous les utilisateurs (sans filtrer par userId)
+app.get('/all-articles', (req, res) => {
   const query = 'SELECT * FROM article';
   connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération de tous les articles:', err);
+      res.status(500).send('Erreur lors de la récupération des articles');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+
+// Route pour obtenir tous les articles de l'utilisateur
+app.get('/articles', (req, res) => {
+  const { userId } = req.query;
+
+  const query = 'SELECT * FROM article WHERE user_id = ?';
+  connection.query(query, [userId], (err, results) => {
     if (err) {
       console.error('Erreur lors de la récupération des articles:', err);
       res.status(500).send('Erreur lors de la récupération des articles');
@@ -96,7 +106,6 @@ app.get('/articles', (req, res) => {
 app.get('/articles/:id', (req, res) => {
   const { id } = req.params;
 
-  // Requête pour obtenir un article spécifique de la base de données
   const query = 'SELECT * FROM article WHERE id = ?';
   connection.query(query, [id], (err, results) => {
     if (err) {
@@ -106,6 +115,26 @@ app.get('/articles/:id', (req, res) => {
       res.status(404).send('Article non trouvé');
     } else {
       res.status(200).json(results[0]);
+    }
+  });
+});
+
+// Route pour mettre à jour un article
+app.put('/articles/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, descriptif, prix, url } = req.body;
+
+  if (!title || !descriptif || !prix) {
+    return res.status(400).json({ message: 'Tous les champs sont requis.' });
+  }
+
+  const query = 'UPDATE article SET title = ?, descriptif = ?, prix = ?, url = ? WHERE id = ?';
+  connection.query(query, [title, descriptif, prix, url, id], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la mise à jour de l\'article:', err);
+      res.status(500).send('Erreur lors de la mise à jour de l\'article');
+    } else {
+      res.status(200).send('Article mis à jour avec succès');
     }
   });
 });

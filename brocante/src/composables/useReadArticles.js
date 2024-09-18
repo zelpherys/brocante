@@ -1,31 +1,28 @@
-import { ref } from "vue"; // Importation de ref pour créer des références réactives
-import axios from "axios"; // Importation d'axios pour les requêtes HTTP
+import { ref } from "vue";
+import axios from "axios";
 
 export function useReadArticles() {
-  const userArticles = ref([]); // Référence réactive pour stocker les articles de l'utilisateur
-  const error = ref(null); // Référence réactive pour les erreurs
-  const loading = ref(false); // Référence réactive pour l'état de chargement
+  const userArticles = ref([]);
+  const error = ref(null);
+  const loading = ref(false);
 
   // Fonction pour récupérer les articles de l'utilisateur
   const fetchUserArticles = async (userId) => {
-    loading.value = true; // Définir l'état de chargement à true
-    error.value = null; // Réinitialiser l'erreur
+    loading.value = true;
+    error.value = null;
     try {
       // Requête pour obtenir les articles de l'utilisateur depuis l'API
       const response = await axios.get("http://localhost:3000/articles", {
-        params: {
-          userId: userId, // Filtrer les articles par l'ID de l'utilisateur
-        },
+        params: { userId: userId }, // Passer userId comme paramètre de requête
       });
-      userArticles.value = response.data; // Stocker les articles récupérés dans la référence réactive
+      userArticles.value = response.data;
     } catch (err) {
-      error.value = "Erreur lors de la récupération des articles."; // Définir un message d'erreur en cas d'échec de la requête
+      error.value = "Erreur lors de la récupération des articles.";
     } finally {
-      loading.value = false; // Définir l'état de chargement à false
+      loading.value = false;
     }
   };
 
-  // Retour des variables et fonctions pour les rendre disponibles dans le composant
   return {
     userArticles,
     error,

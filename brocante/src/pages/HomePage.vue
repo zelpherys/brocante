@@ -1,8 +1,15 @@
 <script setup>
 import CardComponent from "@/components/CardComponent.vue";
-import { useArticles } from "@/composables/useArticles";
+import { onMounted } from "vue";
+import { useReadAllArticles } from "@/composables/useReadAllArticles";
 
-const { articles } = useArticles();
+// Utiliser le composable pour récupérer tous les articles
+const { allArticles, error, loading, fetchAllArticles } = useReadAllArticles();
+
+// Récupérer les articles lors du montage du composant
+onMounted(() => {
+  fetchAllArticles();
+});
 </script>
 
 <template>
@@ -19,10 +26,13 @@ const { articles } = useArticles();
     </header>
 
     <main>
-      <div class="products-grid">
+      <div v-if="loading">Chargement des articles...</div>
+      <div v-if="error">{{ error }}</div>
+
+      <div v-if="allArticles.length && !loading" class="products-grid">
         <!-- Affichage des articles -->
         <CardComponent
-          v-for="article in articles"
+          v-for="article in allArticles"
           :key="article.id"
           :article="article"
           :isClickable="true"
