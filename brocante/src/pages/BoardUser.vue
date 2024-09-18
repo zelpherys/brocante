@@ -19,17 +19,17 @@
       <div class="form-group">
         <!-- Champ pour la description de l'article -->
         <label for="description">Description:</label>
-        <textarea v-model="description" required></textarea>
+        <textarea v-model="descriptif" required></textarea>
       </div>
       <div class="form-group">
         <!-- Champ pour le prix de l'article -->
         <label for="price">Prix:</label>
-        <input type="number" v-model="price" required />
+        <input type="number" v-model="prix" required />
       </div>
       <div class="form-group">
         <!-- Champ pour l'URL de l'image de l'article -->
         <label for="imageUrl">URL de l'image:</label>
-        <input type="text" v-model="imageUrl" required />
+        <input type="text" v-model="url" required />
       </div>
       <!-- Bouton pour soumettre le formulaire de création ou de mise à jour d'article -->
       <button type="submit">
@@ -69,7 +69,7 @@ import CardComponent from "@/components/CardComponent.vue";
 const user = ref(JSON.parse(localStorage.getItem("user")));
 
 // Utilisation des composables pour créer, lire et mettre à jour les articles
-const { title, description, price, imageUrl, error, createArticle } =
+const { title, descriptif, prix, url, error, createArticle } =
   useCreateArticle();
 const { userArticles, fetchUserArticles } = useReadArticles();
 const { updateArticle } = useUpdateArticle();
@@ -80,8 +80,15 @@ const editingArticleId = ref(null);
 
 // Fonction pour gérer la création d'un nouvel article
 const createNewArticle = async () => {
-  await createArticle(user.value.id);
-  fetchUserArticles(user.value.id);
+  console.log('Données avant création:', {
+    title: title.value,
+    descriptif: descriptif.value,
+    prix: prix.value,
+    url: url.value,
+    user_id: user.value.ID
+  });
+  await createArticle(user.value.ID);
+  fetchUserArticles(user.value.ID);
 };
 
 // Fonction pour commencer l'édition d'un article
@@ -89,22 +96,22 @@ const editArticle = (article) => {
   isEditing.value = true;
   editingArticleId.value = article.id;
   title.value = article.title;
-  description.value = article.description;
-  price.value = article.price;
-  imageUrl.value = article.imageUrl;
+  descriptif.value = article.descriptif;
+  prix.value = article.prix;
+  url.value = article.url;
 };
 
 // Fonction pour mettre à jour l'article en cours de modification
 const updateExistingArticle = async () => {
   const updatedArticle = {
     title: title.value,
-    description: description.value,
-    price: price.value,
-    imageUrl: imageUrl.value,
-    userId: user.value.id,
+    descriptif: descriptif.value,
+    prix: prix.value,
+    url: url.value,
+    userId: user.value.ID,
   };
   await updateArticle(editingArticleId.value, updatedArticle);
-  fetchUserArticles(user.value.id);
+  fetchUserArticles(user.value.ID);
   isEditing.value = false;
   editingArticleId.value = null;
 };
@@ -117,7 +124,7 @@ const logout = () => {
 
 // Hook de cycle de vie onMounted pour récupérer les articles de l'utilisateur lorsque le composant est monté
 onMounted(() => {
-  fetchUserArticles(user.value.id);
+  fetchUserArticles(user.value.ID);
 });
 </script>
 

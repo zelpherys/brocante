@@ -59,16 +59,16 @@ app.post('/login', (req, res) => {
 
 // Route pour créer un nouvel article
 app.post('/articles', (req, res) => {
-  const { title, description, price, imageUrl, user_id } = req.body;
+  const { title, descriptif, prix, url, user_id } = req.body;
   
   // Validation des champs requis
-  if (!title || !description || !price || !user_id) {
+  if (!title || !descriptif || !prix || !user_id) {
     return res.status(400).json({ message: 'Tous les champs sont requis.' });
   }
 
   // Requête pour insérer un nouvel article dans la base de données
-  const query = 'INSERT INTO article (title, description, price, imageUrl, user_id) VALUES (?, ?, ?, ?, ?)';
-  connection.query(query, [title, description, price, imageUrl, user_id], (err, results) => {
+  const query = 'INSERT INTO article (title, descriptif, prix, url, user_id) VALUES (?, ?, ?, ?, ?)';
+  connection.query(query, [title, descriptif, prix, url, user_id], (err, results) => {
     if (err) {
       console.error('Erreur lors de la création de l\'article:', err);
       res.status(500).send('Erreur lors de la création de l\'article');
