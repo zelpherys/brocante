@@ -34,10 +34,10 @@ const navigateToDetails = () => {
 
 <template>
   <div class="product-item" @click="navigateToDetails">
-    <img :src="article.url" :alt="article.descriptif" />
-    <p class="article-price">{{ article.prix }} €</p>
     <p class="article-title">{{ article.title }}</p>
+    <img :src="article.url" :alt="article.descriptif" />
     <p class="article-description">{{ article.descriptif }}</p>
+    <p class="article-price">{{ article.prix }} €</p>
     <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
       Modifier
     </button>
@@ -75,13 +75,9 @@ const navigateToDetails = () => {
   margin-bottom: 10px;
 }
 
-.article-price {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
 .article-title {
   font-size: 16px;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
@@ -91,6 +87,12 @@ const navigateToDetails = () => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.article-price {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .edit-button {
