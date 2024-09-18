@@ -40,6 +40,7 @@
         :article="article"
         :isClickable="true"
         @editArticle="editArticle"
+        @deleteArticle="deleteArticle"
       />
     </ul>
   </div>
@@ -51,6 +52,7 @@ import { useRouter } from "vue-router";
 import { useCreateArticle } from "@/composables/useCreateArticle";
 import { useReadArticles } from "@/composables/useReadArticles";
 import { useUpdateArticle } from "@/composables/useUpdateArticle";
+import { useDeleteArticle } from "@/composables/useDeleteArticle";
 import CardComponent from "@/components/CardComponent.vue";
 
 const user = ref(JSON.parse(localStorage.getItem("user")));
@@ -58,6 +60,7 @@ const user = ref(JSON.parse(localStorage.getItem("user")));
 const { title, descriptif, prix, url, error, createArticle } = useCreateArticle();
 const { userArticles, fetchUserArticles } = useReadArticles();
 const { updateArticle } = useUpdateArticle();
+const { deleteArticle: deleteArticleFunction } = useDeleteArticle();
 
 const router = useRouter();
 const isEditing = ref(false);
@@ -89,6 +92,11 @@ const updateExistingArticle = async () => {
   fetchUserArticles(user.value.ID);
   isEditing.value = false;
   editingArticleId.value = null;
+};
+
+const deleteArticle = async (articleId) => {
+  await deleteArticleFunction(articleId, user.value.ID);
+  fetchUserArticles(user.value.ID);
 };
 
 const logout = () => {

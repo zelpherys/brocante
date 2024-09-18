@@ -1,3 +1,18 @@
+<template>
+  <div class="product-item" @click="navigateToDetails">
+    <img :src="article.imageUrl" :alt="article.description" />
+    <p class="article-price">{{ article.price }} €</p>
+    <p class="article-title">{{ article.title }}</p>
+    <p class="article-description">{{ article.description }}</p>
+    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
+      Modifier
+    </button>
+    <button @click.stop="triggerDelete" class="delete-button">
+      Supprimer
+    </button>
+  </div>
+</template>
+
 <script setup>
 import { defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
@@ -17,12 +32,16 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["editArticle"]);
+const emits = defineEmits(["editArticle", "deleteArticle"]);
 
 const router = useRouter();
 
 const triggerEdit = () => {
   emits("editArticle", props.article);
+};
+
+const triggerDelete = () => {
+  emits("deleteArticle", props.article.id);
 };
 
 const navigateToDetails = () => {
@@ -31,18 +50,6 @@ const navigateToDetails = () => {
   }
 };
 </script>
-
-<template>
-  <div class="product-item" @click="navigateToDetails">
-    <img :src="article.imageUrl" :alt="article.description" />
-    <p class="article-price">{{ article.price }} €</p>
-    <p class="article-title">{{ article.title }}</p>
-    <p class="article-description">{{ article.description }}</p>
-    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
-      Modifier
-    </button>
-  </div>
-</template>
 
 <style scoped>
 .product-item {
@@ -105,5 +112,19 @@ const navigateToDetails = () => {
 
 .edit-button:hover {
   background-color: #0056b3;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.delete-button:hover {
+  background-color: #ff1a1a;
 }
 </style>

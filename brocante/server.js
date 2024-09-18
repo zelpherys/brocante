@@ -139,6 +139,24 @@ app.put('/articles/:id', (req, res) => {
   });
 });
 
+app.delete('/articles/:id', (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+
+  const query = 'DELETE FROM article WHERE id = ? AND user_id = ?';
+  connection.query(query, [id, userId], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la suppression de l\'article:', err);
+      res.status(500).send('Erreur lors de la suppression de l\'article');
+    } else if (results.affectedRows === 0) {
+      res.status(404).send('Article non trouvé ou vous n\'êtes pas autorisé à le supprimer');
+    } else {
+      res.status(200).send('Article supprimé avec succès');
+    }
+  });
+});
+
+
 // Rediriger toutes les autres requêtes vers index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
