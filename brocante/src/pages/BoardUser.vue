@@ -4,6 +4,7 @@
     <h2>Tableau de bord</h2>
     <p>Bienvenue, {{ user.username }}!</p>
 
+    <!-- Formulaire pour créer ou modifier un article -->
     <form
       class="create-article-form"
       @submit.prevent="isEditing ? updateExistingArticle() : createNewArticle()"
@@ -29,11 +30,13 @@
       </button>
     </form>
 
+    <!-- Bouton pour se déconnecter -->
     <button class="logout-button" @click="logout">Se déconnecter</button>
     <p v-if="error">{{ error }}</p>
 
     <h3>Vos articles</h3>
     <ul class="articles-list">
+      <!-- Composant pour afficher les articles de l'utilisateur -->
       <CardComponent
         v-for="article in userArticles"
         :key="article.id"
@@ -47,30 +50,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useCreateArticle } from "@/composables/useCreateArticle";
-import { useReadArticles } from "@/composables/useReadArticles";
-import { useUpdateArticle } from "@/composables/useUpdateArticle";
-import { useDeleteArticle } from "@/composables/useDeleteArticle";
-import CardComponent from "@/components/CardComponent.vue";
+import { ref, onMounted } from "vue"; // Importation des fonctions ref et onMounted depuis Vue
+import { useRouter } from "vue-router"; // Importation de useRouter pour la navigation
+import { useCreateArticle } from "@/composables/useCreateArticle"; // Importation du composable pour créer un article
+import { useReadArticles } from "@/composables/useReadArticles"; // Importation du composable pour lire les articles
+import { useUpdateArticle } from "@/composables/useUpdateArticle"; // Importation du composable pour mettre à jour un article
+import { useDeleteArticle } from "@/composables/useDeleteArticle"; // Importation du composable pour supprimer un article
+import CardComponent from "@/components/CardComponent.vue"; // Importation du composant pour afficher les articles
 
+// Récupération des informations de l'utilisateur depuis le localStorage
 const user = ref(JSON.parse(localStorage.getItem("user")));
 
+// Utilisation des composables pour gérer les articles
 const { title, descriptif, prix, url, error, createArticle } = useCreateArticle();
 const { userArticles, fetchUserArticles } = useReadArticles();
 const { updateArticle } = useUpdateArticle();
 const { deleteArticle: deleteArticleFunction } = useDeleteArticle();
 
-const router = useRouter();
-const isEditing = ref(false);
-const editingArticleId = ref(null);
+const router = useRouter(); // Initialisation du routeur
+const isEditing = ref(false); // État pour savoir si on est en mode édition
+const editingArticleId = ref(null); // ID de l'article en cours d'édition
 
+// Fonction pour créer un nouvel article
 const createNewArticle = async () => {
   await createArticle(user.value.ID);
   fetchUserArticles(user.value.ID);
 };
 
+// Fonction pour éditer un article
 const editArticle = (article) => {
   isEditing.value = true;
   editingArticleId.value = article.id;
@@ -80,6 +87,7 @@ const editArticle = (article) => {
   url.value = article.url;
 };
 
+// Fonction pour mettre à jour un article existant
 const updateExistingArticle = async () => {
   const updatedArticle = {
     title: title.value,
@@ -94,16 +102,19 @@ const updateExistingArticle = async () => {
   editingArticleId.value = null;
 };
 
+// Fonction pour supprimer un article
 const deleteArticle = async (articleId) => {
   await deleteArticleFunction(articleId, user.value.ID);
   fetchUserArticles(user.value.ID);
 };
 
+// Fonction pour se déconnecter
 const logout = () => {
   localStorage.removeItem("user");
   router.push("./connexion");
 };
 
+// Récupération des articles de l'utilisateur lors du montage du composant
 onMounted(() => {
   fetchUserArticles(user.value.ID);
 });

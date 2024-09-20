@@ -2,39 +2,43 @@
   <div class="register-container">
     <br>
     <h1>Créer un compte</h1>
+    <!-- Formulaire de création de compte -->
     <form @submit.prevent="handleSubmit" class="register-form">
       <div class="form-group">
-        <input v-model="username" placeholder="Nom" required />
+        <input v-model="username" placeholder="Nom" required /> <!-- Champ pour le nom d'utilisateur -->
       </div>
       <div class="form-group">
-        <input v-model="email" placeholder="Email" required />
+        <input v-model="email" placeholder="Email" required /> <!-- Champ pour l'email -->
       </div>
       <div class="form-group">
-        <input type="password" v-model="password" placeholder="Mot de passe" required />
+        <input type="password" v-model="password" placeholder="Mot de passe" required /> <!-- Champ pour le mot de passe -->
       </div>
-      <button type="submit" :disabled="loading">Créer Utilisateur</button>
-      <p v-if="error">{{ error.message }}</p>
+      <button type="submit" :disabled="loading">Créer Utilisateur</button> <!-- Bouton de soumission -->
+      <p v-if="error">{{ error.message }}</p> <!-- Affichage des erreurs -->
     </form>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useCreateUser } from '@/composables/useCreateUser';
+import { ref } from 'vue'; // Importation de la fonction ref depuis Vue
+import { useCreateUser } from '@/composables/useCreateUser'; // Importation du composable useCreateUser
 
 export default {
   setup() {
+    // Création de références réactives pour les champs du formulaire et les états
     const username = ref('');
     const email = ref('');
     const password = ref('');
     const { createUser, loading, error } = useCreateUser();
 
+    // Fonction pour soumettre le formulaire de création de compte
     const handleSubmit = async () => {
       const userData = { username: username.value, email: email.value, password: password.value };
-      console.log('Données envoyées:', userData); // Afficher les données envoyées
-      await createUser(userData);
+      console.log('Données envoyées:', userData); // Affiche les données envoyées pour vérification
+      await createUser(userData); // Appel de la fonction createUser pour créer un nouvel utilisateur
     };
 
+    // Retourne les références et la fonction handleSubmit pour qu'elles puissent être utilisées dans le template
     return {
       username,
       email,

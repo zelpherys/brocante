@@ -1,7 +1,7 @@
 <script setup>
-import CardComponent from "@/components/CardComponent.vue";
-import { onMounted } from "vue";
-import { useReadAllArticles } from "@/composables/useReadAllArticles";
+import CardComponent from "@/components/CardComponent.vue"; // Importation du composant CardComponent
+import { onMounted } from "vue"; // Importation de la fonction onMounted depuis Vue
+import { useReadAllArticles } from "@/composables/useReadAllArticles"; // Importation du composable pour récupérer tous les articles
 
 // Utiliser le composable pour récupérer tous les articles
 const { allArticles, error, loading, fetchAllArticles } = useReadAllArticles();
@@ -26,8 +26,8 @@ onMounted(() => {
     </header> -->
 
     <main>
-      <div v-if="loading">Chargement des articles...</div>
-      <div v-if="error">{{ error }}</div>
+      <div v-if="loading">Chargement des articles...</div> <!-- Affichage du message de chargement -->
+      <div v-if="error">{{ error }}</div> <!-- Affichage des erreurs -->
 
       <div v-if="allArticles.length && !loading" class="products-grid">
         <!-- Affichage des articles -->
