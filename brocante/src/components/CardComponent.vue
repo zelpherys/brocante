@@ -1,3 +1,24 @@
+<template>
+  <div class="product-item" @click="navigateToDetails">
+    <p class="article-title">{{ article.title }}</p>
+    <div class="image-container">
+      <img :src="article.url" :alt="article.descriptif" @error="onImageError" />
+    </div>
+    <p class="article-description">{{ article.descriptif }}</p>
+    <p class="article-price">{{ article.prix }} €</p>
+    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
+      Modifier
+    </button>
+    <button
+      v-if="!isHomePage"
+      @click.stop="triggerDelete"
+      class="delete-button"
+    >
+      Supprimer
+    </button>
+  </div>
+</template>
+
 <script setup>
 import { defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
@@ -22,7 +43,6 @@ const props = defineProps({
 });
 
 const emits = defineEmits(["editArticle", "deleteArticle"]);
-
 const router = useRouter();
 
 const triggerEdit = () => {
@@ -38,22 +58,11 @@ const navigateToDetails = () => {
     router.push({ name: "ArticleDetail", params: { id: props.article.id } });
   }
 };
-</script>
 
-<template>
-  <div class="product-item" @click="navigateToDetails">
-    <p class="article-title">{{ article.title }}</p>
-    <img :src="article.url" :alt="article.descriptif" />
-    <p class="article-description">{{ article.descriptif }}</p>
-    <p class="article-price">{{ article.prix }} €</p>
-    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
-      Modifier
-    </button>
-    <button v-if="!isHomePage" @click.stop="triggerDelete" class="delete-button">
-      Supprimer
-    </button>
-  </div>
-</template>
+const onImageError = (event) => {
+  event.target.src = "default-image.jpg"; // Image de secours si l'image originale ne se charge pas
+};
+</script>
 
 <style scoped>
 .product-item {
@@ -78,12 +87,19 @@ const navigateToDetails = () => {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.product-item img {
+.image-container {
   width: 100%;
   height: 150px;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 10px;
+  overflow: hidden; /* Cache l'excédent d'image pour s'assurer qu'elle reste dans le conteneur */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Affiche toute l'image en conservant ses proportions */
 }
 
 .article-title {

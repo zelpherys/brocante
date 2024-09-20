@@ -57,7 +57,8 @@ import CardComponent from "@/components/CardComponent.vue";
 
 const user = ref(JSON.parse(localStorage.getItem("user")));
 
-const { title, descriptif, prix, url, error, createArticle } = useCreateArticle();
+const { title, descriptif, prix, url, error, createArticle } =
+  useCreateArticle();
 const { userArticles, fetchUserArticles } = useReadArticles();
 const { updateArticle } = useUpdateArticle();
 const { deleteArticle: deleteArticleFunction } = useDeleteArticle();

@@ -4,7 +4,8 @@
       <h2>Connexion</h2>
       <form @submit.prevent="loginUser">
         <div class="form-group">
-          <label for="username">Nom d'utilisateur :</label>  <!-- Modifié -->
+          <label for="username">Nom d'utilisateur :</label>
+          <!-- Modifié -->
           <input type="text" v-model="username" required />
         </div>
         <div class="form-group">
@@ -24,20 +25,20 @@
 </template>
 
 <script setup>
-import { useLogin } from '@/composables/useLogin';  // Importation du composable useLogin
-import { useRouter } from 'vue-router';  // Utilisation du router pour la redirection après connexion
+import { useLogin } from "@/composables/useLogin"; // Importation du composable useLogin
+import { useRouter } from "vue-router"; // Utilisation du router pour la redirection après connexion
 
 // Utilisation du composable useLogin pour gérer la logique de connexion
 const { username, password, error, loading, login } = useLogin();
-const router = useRouter();  // Pour naviguer vers une autre page après connexion
+const router = useRouter(); // Pour naviguer vers une autre page après connexion
 
 // Fonction pour soumettre le formulaire de connexion
 const loginUser = async () => {
-  const user = await login();  // Appel de la fonction login pour tenter la connexion
+  const user = await login(); // Appel de la fonction login pour tenter la connexion
 
   if (user) {
     // Si la connexion réussit, redirection vers la page du tableau de bord
-    router.push('/board');  // Remplace '/board' par la route de ton tableau de bord
+    router.push("/board"); // Remplace '/board' par la route de ton tableau de bord
   }
 };
 </script>
