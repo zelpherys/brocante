@@ -15,7 +15,7 @@ onMounted(() => {
 <template>
   <h1>Hello Brocante</h1>
   <div>
-    <header>
+    <!-- <header>
       <h1>Filtrer Par:</h1>
       <div class="categories">
         <button>Équipement audio</button>
@@ -23,7 +23,7 @@ onMounted(() => {
         <button>Batteries</button>
         <button>Prix</button>
       </div>
-    </header>
+    </header> -->
 
     <main>
       <div v-if="loading">Chargement des articles...</div>
@@ -37,6 +37,7 @@ onMounted(() => {
           :article="article"
           :isClickable="true"
           :showEditButton="false"
+          :isHomePage="true"
         />
       </div>
     </main>

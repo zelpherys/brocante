@@ -1,18 +1,3 @@
-<template>
-  <div class="product-item" @click="navigateToDetails">
-    <img :src="article.imageUrl" :alt="article.description" />
-    <p class="article-price">{{ article.price }} €</p>
-    <p class="article-title">{{ article.title }}</p>
-    <p class="article-description">{{ article.description }}</p>
-    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
-      Modifier
-    </button>
-    <button @click.stop="triggerDelete" class="delete-button">
-      Supprimer
-    </button>
-  </div>
-</template>
-
 <script setup>
 import { defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
@@ -29,6 +14,10 @@ const props = defineProps({
   showEditButton: {
     type: Boolean,
     default: true,
+  },
+  isHomePage: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -50,6 +39,21 @@ const navigateToDetails = () => {
   }
 };
 </script>
+
+<template>
+  <div class="product-item" @click="navigateToDetails">
+    <p class="article-title">{{ article.title }}</p>
+    <img :src="article.url" :alt="article.descriptif" />
+    <p class="article-description">{{ article.descriptif }}</p>
+    <p class="article-price">{{ article.prix }} €</p>
+    <button v-if="showEditButton" @click.stop="triggerEdit" class="edit-button">
+      Modifier
+    </button>
+    <button v-if="!isHomePage" @click.stop="triggerDelete" class="delete-button">
+      Supprimer
+    </button>
+  </div>
+</template>
 
 <style scoped>
 .product-item {
@@ -82,13 +86,9 @@ const navigateToDetails = () => {
   margin-bottom: 10px;
 }
 
-.article-price {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
 .article-title {
   font-size: 16px;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
@@ -98,6 +98,12 @@ const navigateToDetails = () => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.article-price {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .edit-button {
